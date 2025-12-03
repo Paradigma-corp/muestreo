@@ -3,7 +3,7 @@ import {
   Calculator, Target, Split, Layers, DollarSign, Clock, 
   Plus, Trash2, BookOpen, ArrowRight, CheckCircle2, 
   AlertTriangle, Lightbulb, Zap, BarChart3, ChevronDown, ChevronUp,
-  HelpCircle
+  HelpCircle, Activity, Users, FileQuestion
 } from 'lucide-react';
 
 // --- ESTILO "VISIONARY 2025" + RIGOR ACADÉMICO ---
@@ -141,6 +141,7 @@ export default function App() {
     { id: 'ab-test', label: '3. A/B Test', icon: Split },
     { id: 'stratified', label: '4. Estratos', icon: Layers },
     { id: 'costs', label: '5. Costos', icon: DollarSign },
+    { id: 'sampling-guide', label: '6. Guía Metodológica', icon: BookOpen },
   ];
 
   return (
@@ -181,6 +182,7 @@ export default function App() {
           {activeTab === 'ab-test' && <ABTestingTool />}
           {activeTab === 'stratified' && <StratifiedTool />}
           {activeTab === 'costs' && <CostEstimatorTool />}
+          {activeTab === 'sampling-guide' && <SamplingGuideTool />}
         </div>
       </main>
 
@@ -457,8 +459,8 @@ function ABTestingTool() {
        </div>
        
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 mb-8">
-          {/* Grupo A */}
-          <div className="bg-slate-50 rounded-[2rem] p-8 transition-all duration-300 hover:shadow-lg border border-transparent hover:border-slate-100">
+         {/* Grupo A */}
+         <div className="bg-slate-50 rounded-[2rem] p-8 transition-all duration-300 hover:shadow-lg border border-transparent hover:border-slate-100">
              <div className="flex justify-between items-center mb-8">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Grupo Control (A)</span>
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm text-slate-400 font-bold">A</div>
@@ -477,10 +479,10 @@ function ABTestingTool() {
                  <span className="text-4xl font-black text-slate-800 tracking-tighter">{results?.rateA}%</span>
                </div>
              </div>
-          </div>
+         </div>
 
-          {/* Grupo B */}
-          <div className="bg-indigo-50/50 rounded-[2rem] p-8 transition-all duration-300 hover:shadow-lg border border-indigo-50 hover:border-indigo-100 relative overflow-hidden">
+         {/* Grupo B */}
+         <div className="bg-indigo-50/50 rounded-[2rem] p-8 transition-all duration-300 hover:shadow-lg border border-indigo-50 hover:border-indigo-100 relative overflow-hidden">
              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-200/40 rounded-full blur-3xl -mr-10 -mt-10"></div>
              
              <div className="flex justify-between items-center mb-8 relative z-10">
@@ -501,7 +503,7 @@ function ABTestingTool() {
                  <span className="text-4xl font-black text-indigo-600 tracking-tighter">{results?.rateB}%</span>
                </div>
              </div>
-          </div>
+         </div>
        </div>
 
        {results && (
@@ -658,7 +660,7 @@ function StratifiedTool() {
               whenToUse="Cuando la población es heterogénea (ej: una empresa con 90% operarios y 10% directivos). Un sorteo simple podría dejar fuera a los directivos; este método asegura que se encueste al % correcto de cada uno."
               interpretation="La columna 'Muestra (ni)' indica cuántas encuestas debes hacer OBLIGATORIAMENTE en ese grupo para mantener la validez estadística."
               formula="ni = n * (Ni / N)"
-           />
+            />
         </div>
       </div>
     </Card>
@@ -778,6 +780,116 @@ function CostEstimatorTool() {
         ]}
         formula="Total_Contactos = Muestra_Objetivo / (Incidencia %)"
       />
+    </Card>
+  );
+}
+
+// ----------------------------------------------------------------------
+// 6. GUÍA DE MUESTREO (NEW)
+// ----------------------------------------------------------------------
+function SamplingGuideTool() {
+  return (
+    <Card className="p-8 lg:p-12">
+      <div className="mb-10">
+         <h2 className="text-3xl font-black tracking-tighter mb-2">Selector de Método</h2>
+         <p className="text-slate-500 font-medium text-sm">¿Qué tipo de muestreo necesita tu estudio?</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Probabilístico */}
+        <div className="bg-slate-900 text-white rounded-[2rem] p-8 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/30 rounded-full blur-[80px] -mr-20 -mt-20"></div>
+            <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-3 bg-white/10 rounded-xl">
+                        <BarChart3 size={24} className="text-emerald-400" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold">Probabilístico</h3>
+                        <p className="text-xs text-slate-400 uppercase tracking-widest">El Estándar Científico</p>
+                    </div>
+                </div>
+                
+                <p className="text-slate-300 text-sm mb-8 leading-relaxed">
+                    Todos los individuos tienen una probabilidad conocida (no cero) de ser seleccionados. Permite calcular el margen de error y generalizar resultados (inferencia estadística).
+                </p>
+
+                <div className="space-y-4">
+                    <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                        <h4 className="font-bold text-emerald-300 text-sm mb-1">Aleatorio Simple</h4>
+                        <p className="text-xs text-slate-400">Sorteo puro. Requiere lista completa.</p>
+                    </div>
+                    <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                        <h4 className="font-bold text-emerald-300 text-sm mb-1">Estratificado</h4>
+                        <p className="text-xs text-slate-400">Divide en grupos clave y sortea dentro de ellos para asegurar representación.</p>
+                    </div>
+                    <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                        <h4 className="font-bold text-emerald-300 text-sm mb-1">Por Conglomerados</h4>
+                        <p className="text-xs text-slate-400">Selecciona grupos naturales (ej: escuelas, manzanas) al azar.</p>
+                    </div>
+                </div>
+                
+                <div className="mt-8 pt-6 border-t border-white/10">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Requisitos:</p>
+                    <ul className="text-xs text-slate-300 space-y-2 list-disc pl-4">
+                        <li>Marco muestral (lista de contactos) completo.</li>
+                        <li>Aleatoriedad estricta en la selección.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {/* No Probabilístico */}
+        <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-8 relative overflow-hidden group">
+             <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-3 bg-white border border-slate-200 rounded-xl shadow-sm">
+                        <Target size={24} className="text-indigo-600" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-slate-900">No Probabilístico</h3>
+                        <p className="text-xs text-slate-500 uppercase tracking-widest">El Estándar Práctico</p>
+                    </div>
+                </div>
+                
+                <p className="text-slate-600 text-sm mb-8 leading-relaxed">
+                    La selección depende del criterio del investigador o la disponibilidad. No permite cálculo riguroso de error, pero es útil para exploración o cuando no hay lista completa.
+                </p>
+
+                <div className="space-y-4">
+                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <h4 className="font-bold text-indigo-600 text-sm mb-1">Por Cuotas</h4>
+                        <p className="text-xs text-slate-500">Imita la composición demográfica (ej: 50% hombres) pero elige a dedo.</p>
+                    </div>
+                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <h4 className="font-bold text-indigo-600 text-sm mb-1">Bola de Nieve</h4>
+                        <p className="text-xs text-slate-500">Los participantes reclutan a otros. Ideal para poblaciones ocultas.</p>
+                    </div>
+                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <h4 className="font-bold text-indigo-600 text-sm mb-1">Conveniencia</h4>
+                        <p className="text-xs text-slate-500">Lo que esté a mano (ej: encuestar en la calle). Alto sesgo.</p>
+                    </div>
+                </div>
+                
+                <div className="mt-8 pt-6 border-t border-slate-200">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Uso Común:</p>
+                    <ul className="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                        <li>Estudios de mercado rápidos.</li>
+                        <li>Pruebas piloto.</li>
+                        <li>Cuando es imposible tener lista de todos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+       <ExplanationSection 
+          title="¿Cuál debo elegir?"
+          purpose="Definir la validez externa del estudio. La elección dicta si puedes decir 'La población piensa X' o solo 'Mis encuestados piensan X'."
+          whenToUse="Fase de diseño de investigación."
+          interpretation="Si usas No Probabilístico, técnicamente no puedes reportar Margen de Error, aunque la industria a menudo lo hace como 'referencia'. Sé honesto con las limitaciones."
+          formula="Validez = Representatividad vs. Viabilidad"
+       />
     </Card>
   );
 }
