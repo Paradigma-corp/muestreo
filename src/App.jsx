@@ -3,7 +3,7 @@ import {
   Calculator, Target, Split, Layers, DollarSign, Clock, 
   Plus, Trash2, BookOpen, ArrowRight, CheckCircle2, 
   AlertTriangle, Lightbulb, Zap, BarChart3, ChevronDown, ChevronUp,
-  HelpCircle, Activity, Users, FileQuestion
+  HelpCircle, Activity, Users, FileQuestion, Briefcase, TrendingUp, ShoppingBag, PieChart
 } from 'lucide-react';
 
 // --- ESTILO "VISIONARY 2025" + RIGOR ACADÉMICO ---
@@ -141,7 +141,9 @@ export default function App() {
     { id: 'ab-test', label: '3. A/B Test', icon: Split },
     { id: 'stratified', label: '4. Estratos', icon: Layers },
     { id: 'costs', label: '5. Costos', icon: DollarSign },
-    { id: 'sampling-guide', label: '6. Guía Metodológica', icon: BookOpen },
+    { id: 'sampling-guide', label: '6. Guía', icon: BookOpen },
+    { id: 'case-studies', label: '7. Casos Prácticos', icon: Briefcase },
+    { id: 'demand', label: '8. Estimar Demanda', icon: PieChart }, // Changed icon to PieChart for Market Share feel
   ];
 
   return (
@@ -183,6 +185,8 @@ export default function App() {
           {activeTab === 'stratified' && <StratifiedTool />}
           {activeTab === 'costs' && <CostEstimatorTool />}
           {activeTab === 'sampling-guide' && <SamplingGuideTool />}
+          {activeTab === 'case-studies' && <CaseStudiesTool />}
+          {activeTab === 'demand' && <DemandEstimationTool />}
         </div>
       </main>
 
@@ -889,6 +893,267 @@ function SamplingGuideTool() {
           whenToUse="Fase de diseño de investigación."
           interpretation="Si usas No Probabilístico, técnicamente no puedes reportar Margen de Error, aunque la industria a menudo lo hace como 'referencia'. Sé honesto con las limitaciones."
           formula="Validez = Representatividad vs. Viabilidad"
+       />
+    </Card>
+  );
+}
+
+// ----------------------------------------------------------------------
+// 7. CASOS DE USO (NEW)
+// ----------------------------------------------------------------------
+function CaseStudiesTool() {
+    const cases = [
+        {
+            title: "Escenario Político / Electoral",
+            subtitle: "Alta Sensibilidad",
+            icon: <AlertTriangle size={24} className="text-rose-500"/>,
+            color: "rose",
+            context: "Elección reñida donde cada punto porcentual define al ganador. Requiere máxima certeza.",
+            params: {
+                pop: "Infinita",
+                conf: "99% (Z=2.58)",
+                error: "2%",
+                result: "~4,147 encuestas"
+            },
+            reason: "El error debe ser menor a la diferencia entre candidatos para predecir con éxito."
+        },
+        {
+            title: "Lanzamiento de Producto (MVP)",
+            subtitle: "Lean Startup",
+            icon: <Zap size={24} className="text-amber-500"/>,
+            color: "amber",
+            context: "Startup validando si la gente compraría una nueva app. Prioriza velocidad y presupuesto.",
+            params: {
+                pop: "Infinita",
+                conf: "90% (Z=1.65)",
+                error: "7%",
+                result: "~139 encuestas"
+            },
+            reason: "No necesitas precisión milimétrica para saber si una idea 'gusta o no gusta'. Ahorra recursos."
+        },
+        {
+            title: "Clima Laboral Interno",
+            subtitle: "Población Finita",
+            icon: <Briefcase size={24} className="text-indigo-500"/>,
+            color: "indigo",
+            context: "Empresa mediana que quiere medir satisfacción de sus empleados.",
+            params: {
+                pop: "500 empleados",
+                conf: "95% (Z=1.96)",
+                error: "5%",
+                result: "217 encuestas"
+            },
+            reason: "Al ser pocos individuos (N<100,000), el factor de corrección reduce drásticamente la muestra necesaria."
+        }
+    ];
+
+    return (
+        <Card className="p-8 lg:p-12">
+            <div className="mb-10">
+                <h2 className="text-3xl font-black tracking-tighter mb-2">Casos Prácticos</h2>
+                <p className="text-slate-500 font-medium text-sm">Referencias rápidas para tomar decisiones.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {cases.map((c, i) => (
+                    <div key={i} className={`bg-${c.color}-50/50 border border-${c.color}-100 rounded-3xl p-6 hover:shadow-lg transition-all duration-300 group`}>
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="p-3 bg-white rounded-2xl shadow-sm group-hover:scale-110 transition-transform">
+                                {c.icon}
+                            </div>
+                            <span className={`text-[10px] font-bold uppercase tracking-widest text-${c.color}-600 bg-white px-2 py-1 rounded-lg`}>
+                                {c.subtitle}
+                            </span>
+                        </div>
+                        
+                        <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight">{c.title}</h3>
+                        <p className="text-xs text-slate-500 mb-6 leading-relaxed">{c.context}</p>
+
+                        <div className="space-y-3 bg-white p-4 rounded-2xl border border-slate-100 mb-4">
+                            <div className="flex justify-between text-xs">
+                                <span className="text-slate-400 font-medium">Confianza:</span>
+                                <span className="font-bold text-slate-700">{c.params.conf}</span>
+                            </div>
+                            <div className="flex justify-between text-xs">
+                                <span className="text-slate-400 font-medium">Margen Error:</span>
+                                <span className="font-bold text-slate-700">±{c.params.error}</span>
+                            </div>
+                            <div className="pt-2 mt-2 border-t border-slate-100 flex justify-between items-center">
+                                <span className="text-[10px] font-black uppercase text-slate-400">Muestra:</span>
+                                <span className={`font-black text-lg text-${c.color}-600`}>{c.params.result}</span>
+                            </div>
+                        </div>
+
+                        <p className="text-[10px] text-slate-400 italic leading-relaxed border-l-2 pl-3 border-slate-200">
+                            "{c.reason}"
+                        </p>
+                    </div>
+                ))}
+            </div>
+            
+            <ExplanationSection 
+                title="Contexto mata Fórmula"
+                purpose="Entender que el número mágico '384' (error 5%, confianza 95%) no es una ley universal. El diseño muestral debe adaptarse al riesgo que estás dispuesto a correr."
+                whenToUse="Antes de usar la calculadora de la pestaña 1."
+                interpretation="Usa estos ejemplos para defender tu presupuesto. Si tu jefe pide error del 1% con presupuesto cero, muéstrale el caso 'Político' para que vea el costo implicado."
+                formula="Riesgo = (1 - Confianza) + Error"
+            />
+        </Card>
+    );
+}
+
+// ----------------------------------------------------------------------
+// 8. ESTIMACIÓN DE DEMANDA (5-LAYER FUNNEL)
+// ----------------------------------------------------------------------
+function DemandEstimationTool() {
+  const [universe, setUniverse] = useState(100000); // Población Total
+  const [potentialPct, setPotentialPct] = useState(100); // Mercado Potencial (Interés/Necesidad)
+  const [availablePct, setAvailablePct] = useState(80); // Mercado Disponible (Acceso/Plata)
+  const [targetPct, setTargetPct] = useState(50); // Mercado Objetivo (A quién nos dirigimos)
+  const [penetratedPct, setPenetratedPct] = useState(10); // Mercado Penetrado (Cuota actual/esperada)
+  const [frequency, setFrequency] = useState(1);
+
+  // Calculations
+  const potentialMarket = Math.floor(universe * (potentialPct / 100));
+  const availableMarket = Math.floor(potentialMarket * (availablePct / 100));
+  const targetMarket = Math.floor(availableMarket * (targetPct / 100));
+  const penetratedMarket = Math.floor(targetMarket * (penetratedPct / 100));
+  
+  const totalUnits = penetratedMarket * frequency;
+
+  return (
+    <Card className="p-8 lg:p-12">
+      <div className="flex flex-col xl:flex-row gap-12">
+         {/* INPUTS - 5 LAYERS */}
+         <div className="w-full xl:w-5/12 space-y-8">
+            <div>
+               <h2 className="text-3xl font-black tracking-tighter mb-2 text-slate-900">Demanda Potencial</h2>
+               <p className="text-slate-500 font-medium text-sm">Modelo de 5 Capas (Market Sizing).</p>
+            </div>
+
+            <div className="space-y-6">
+               <div>
+                  <Label helpText="Población Total (N) de la zona geográfica o demográfica.">1. Población Total</Label>
+                  <Input type="number" value={universe} onChange={e => setUniverse(Number(e.target.value))} />
+               </div>
+
+               <div className="p-6 bg-slate-50 rounded-3xl space-y-6 border border-slate-100">
+                  <div>
+                      <div className="flex justify-between mb-2">
+                          <Label helpText="% que tiene la necesidad o el problema que resuelves (TAM).">2. % Mercado Potencial</Label>
+                          <span className="text-xs font-bold">{potentialPct}%</span>
+                      </div>
+                      <input type="range" min="1" max="100" value={potentialPct} onChange={e => setPotentialPct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-indigo-600 appearance-none cursor-pointer"/>
+                  </div>
+                  
+                  <div>
+                      <div className="flex justify-between mb-2">
+                          <Label helpText="% del Potencial que tiene acceso a tu canal y capacidad de pago (SAM).">3. % Mercado Disponible</Label>
+                          <span className="text-xs font-bold">{availablePct}%</span>
+                      </div>
+                      <input type="range" min="1" max="100" value={availablePct} onChange={e => setAvailablePct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-indigo-600 appearance-none cursor-pointer"/>
+                  </div>
+
+                  <div>
+                      <div className="flex justify-between mb-2">
+                          <Label helpText="% del Disponible al que decides enfocarte por estrategia o presupuesto (Target).">4. % Mercado Objetivo</Label>
+                          <span className="text-xs font-bold">{targetPct}%</span>
+                      </div>
+                      <input type="range" min="1" max="100" value={targetPct} onChange={e => setTargetPct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-indigo-600 appearance-none cursor-pointer"/>
+                  </div>
+                  
+                  <div>
+                      <div className="flex justify-between mb-2">
+                          <Label helpText="% del Objetivo que realmente logras capturar o convertir (SOM).">5. % Mercado Penetrado</Label>
+                          <span className="text-xs font-bold">{penetratedPct}%</span>
+                      </div>
+                      <input type="range" min="1" max="100" value={penetratedPct} onChange={e => setPenetratedPct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-emerald-500 appearance-none cursor-pointer"/>
+                  </div>
+               </div>
+
+               <div>
+                  <Label helpText="Cuántas veces al año comprará el producto un usuario promedio.">Frecuencia de Consumo (Anual)</Label>
+                  <div className="flex items-center gap-4">
+                     <Input type="number" value={frequency} onChange={e => setFrequency(Number(e.target.value))} className="text-center font-black"/>
+                     <span className="text-sm font-bold text-slate-400">unidades/año</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         {/* OUTPUTS - FUNNEL & BIG NUMBERS */}
+         <div className="w-full xl:w-7/12">
+            <div className="bg-slate-900 text-white rounded-[2.5rem] p-10 h-full relative overflow-hidden flex flex-col justify-between">
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] -mr-40 -mt-40 pointer-events-none"></div>
+
+                <div className="relative z-10 space-y-8">
+                   <div className="flex items-center gap-3">
+                      <div className="p-3 bg-white/10 rounded-xl backdrop-blur-md">
+                         <ShoppingBag size={24} className="text-emerald-400"/>
+                      </div>
+                      <div>
+                         <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Demanda Total Estimada (Q)</p>
+                         <h3 className="text-5xl lg:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">
+                            {totalUnits.toLocaleString()}
+                         </h3>
+                         <p className="text-emerald-400 font-bold text-sm mt-1">Unidades por año</p>
+                      </div>
+                   </div>
+
+                   {/* FUNNEL VIZ */}
+                   <div className="space-y-2 pt-8">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">Embudo de Mercado (Bottom-Up)</p>
+                      
+                      {/* 1. Universe */}
+                      <div className="relative h-10 bg-slate-800 rounded-r-2xl w-full flex items-center px-4 border-l-4 border-slate-600 group">
+                         <span className="text-[10px] font-bold text-slate-400 w-32 uppercase">1. Población Total</span>
+                         <span className="text-xs font-bold ml-auto">{universe.toLocaleString()}</span>
+                      </div>
+                      
+                      {/* 2. Potential */}
+                      <div className="relative h-10 bg-indigo-900/30 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-300/30 transition-all duration-500" style={{width: `${Math.max(10, (potentialMarket/universe)*100)}%`}}>
+                         <span className="text-[10px] font-bold text-indigo-200 w-32 uppercase">2. Potencial</span>
+                         <span className="text-xs font-bold ml-auto text-indigo-100">{potentialMarket.toLocaleString()}</span>
+                      </div>
+
+                      {/* 3. Available */}
+                      <div className="relative h-10 bg-indigo-900/60 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-400/50 transition-all duration-500" style={{width: `${Math.max(10, (availableMarket/universe)*100)}%`}}>
+                         <span className="text-[10px] font-bold text-indigo-100 w-32 uppercase">3. Disponible</span>
+                         <span className="text-xs font-bold ml-auto">{availableMarket.toLocaleString()}</span>
+                      </div>
+
+                       {/* 4. Target */}
+                      <div className="relative h-10 bg-indigo-600 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-400 transition-all duration-500" style={{width: `${Math.max(10, (targetMarket/universe)*100)}%`}}>
+                         <span className="text-[10px] font-bold text-white w-32 uppercase">4. Objetivo</span>
+                         <span className="text-xs font-bold ml-auto">{targetMarket.toLocaleString()}</span>
+                      </div>
+
+                      {/* 5. Penetrated */}
+                      <div className="relative h-10 bg-emerald-500 rounded-r-2xl flex items-center px-4 border-l-4 border-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-500" style={{width: `${Math.max(10, (penetratedMarket/universe)*100)}%`}}>
+                         <span className="text-[10px] font-bold text-black w-32 uppercase">5. Penetrado</span>
+                         <span className="text-xs font-black text-black ml-auto">{penetratedMarket.toLocaleString()}</span>
+                      </div>
+                   </div>
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-white/10 text-xs text-slate-400 leading-relaxed max-w-lg">
+                   Este modelo visualiza la reducción realista de tu mercado. Desde la población general hasta los clientes que efectivamente te compran.
+                </div>
+            </div>
+         </div>
+      </div>
+
+      <ExplanationSection 
+          title="Las 5 Capas de Mercado"
+          purpose="Afinar la puntería. Ir más allá de 'todos son mis clientes' para identificar quién realmente te sostiene financieramente."
+          whenToUse="Obligatorio en Business Plans y Pitch Decks para inversores."
+          interpretation={`De una población de ${universe.toLocaleString()}, tu mercado real es de ${penetratedMarket.toLocaleString()} personas. Esta es tu base de clientes pagadores.`}
+          formula="Penetrado = Objetivo * % Conversión"
+          benchmarks={[
+             "TAM (Potencial): La visión grande.",
+             "SAM (Disponible): Lo realista hoy.",
+             "SOM (Penetrado): Lo que vas a capturar a corto plazo."
+          ]}
        />
     </Card>
   );
