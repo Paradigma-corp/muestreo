@@ -3,7 +3,7 @@ import {
   Calculator, Target, Split, Layers, DollarSign, Clock, 
   Plus, Trash2, BookOpen, ArrowRight, CheckCircle2, 
   AlertTriangle, Lightbulb, Zap, BarChart3, ChevronDown, ChevronUp,
-  HelpCircle, Activity, Users, FileQuestion, Briefcase, TrendingUp, ShoppingBag, PieChart
+  HelpCircle, Activity, Users, FileQuestion, Briefcase, TrendingUp, ShoppingBag, PieChart, Info
 } from 'lucide-react';
 
 // --- ESTILO "VISIONARY 2025" + RIGOR ACADÉMICO ---
@@ -143,7 +143,7 @@ export default function App() {
     { id: 'costs', label: '5. Costos', icon: DollarSign },
     { id: 'sampling-guide', label: '6. Guía', icon: BookOpen },
     { id: 'case-studies', label: '7. Casos Prácticos', icon: Briefcase },
-    { id: 'demand', label: '8. Estimar Demanda', icon: PieChart }, // Changed icon to PieChart for Market Share feel
+    { id: 'demand', label: '8. Estimar Demanda', icon: PieChart }, 
   ];
 
   return (
@@ -195,7 +195,7 @@ export default function App() {
 }
 
 // ----------------------------------------------------------------------
-// 1. CÁLCULO DE MUESTRA (DETAILED)
+// 1. CÁLCULO DE MUESTRA
 // ----------------------------------------------------------------------
 function SampleSizeTool() {
   const [population, setPopulation] = useState('');
@@ -212,7 +212,6 @@ function SampleSizeTool() {
   return (
     <Card className="p-2">
       <div className="flex flex-col lg:flex-row h-full">
-        {/* Panel Izquierdo */}
         <div className="w-full lg:w-5/12 p-8 lg:p-12 space-y-10">
           <div>
              <h2 className="text-3xl font-black tracking-tighter mb-2 text-slate-900">Diseño Muestral</h2>
@@ -280,7 +279,6 @@ function SampleSizeTool() {
           </div>
         </div>
 
-        {/* Panel Derecho */}
         <div className="w-full lg:w-7/12 p-3">
           <div className="bg-slate-900 rounded-[2rem] h-full p-8 lg:p-16 flex flex-col justify-between relative overflow-hidden text-white shadow-2xl">
              <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500/20 rounded-full blur-3xl -mr-40 -mt-40 mix-blend-screen animate-pulse duration-[10s]"></div>
@@ -325,7 +323,7 @@ function SampleSizeTool() {
 }
 
 // ----------------------------------------------------------------------
-// 2. ERROR REAL (DETAILED)
+// 2. ERROR REAL
 // ----------------------------------------------------------------------
 function MarginErrorTool() {
   const [n, setN] = useState('');
@@ -339,14 +337,11 @@ function MarginErrorTool() {
   return (
     <Card className="p-8 lg:p-12">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-        
-        {/* Input Column */}
         <div className="lg:col-span-5 space-y-10">
            <div>
              <h2 className="text-3xl font-black tracking-tighter mb-2">Auditoría Post-Campo</h2>
              <p className="text-slate-500 font-medium text-sm">Verifica la calidad del dato recolectado.</p>
            </div>
-
            <div className="space-y-6">
              <div className="space-y-4">
                <Label helpText="La cantidad final de encuestas válidas que lograste recolectar y procesar.">Muestras Recolectadas (n)</Label>
@@ -358,7 +353,6 @@ function MarginErrorTool() {
                  placeholder="0" 
                />
              </div>
-
              <div className="space-y-4">
                <Label helpText="El universo total de estudio. Si no lo sabes, déjalo vacío (asume infinito).">Población Total (N)</Label>
                <Input 
@@ -369,7 +363,6 @@ function MarginErrorTool() {
                    className="bg-white border-2 border-slate-100"
                />
              </div>
-             
              <div className="pt-4">
                 <Label>Confianza del Estudio</Label>
                 <div className="flex gap-2 p-1.5 bg-slate-100/50 rounded-2xl">
@@ -384,23 +377,19 @@ function MarginErrorTool() {
            </div>
         </div>
 
-        {/* Output Column */}
         <div className="lg:col-span-7 flex flex-col justify-center">
            <div className="bg-slate-50 rounded-[2.5rem] p-10 lg:p-16 text-center relative overflow-hidden group hover:shadow-lg transition-shadow duration-500">
              <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:20px_20px] opacity-30"></div>
-             
              {n ? (
                <div className="relative z-10">
                  <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-6">Error Real Calculado</p>
                  <div className="text-[6rem] lg:text-[8rem] font-black text-slate-900 tracking-tighter leading-none mb-8">
                    ±{result}%
                  </div>
-                 
                  <div className={`inline-flex items-center gap-3 px-6 py-3 rounded-full text-xs font-bold border transition-colors duration-300 ${precisionColor}`}>
                     {Number(result) > 5 ? <AlertTriangle size={16}/> : <CheckCircle2 size={16}/>}
                     Precisión: {precisionLabel}
                  </div>
-                 
                  <p className="text-xs text-slate-400 mt-6 max-w-sm mx-auto font-medium leading-relaxed">
                    {Number(result) > 5 
                      ? "Advertencia: Un error superior al 5% reduce la capacidad de generalizar los resultados a toda la población."
@@ -416,7 +405,6 @@ function MarginErrorTool() {
            </div>
         </div>
       </div>
-      
       <ExplanationSection 
         title="Cálculo Inverso del Error Estándar"
         purpose="Determinar la precisión 'ex-post' (después del hecho). Sirve para reportar honestamente qué tan lejos pueden estar nuestros datos de la realidad."
@@ -429,7 +417,7 @@ function MarginErrorTool() {
 }
 
 // ----------------------------------------------------------------------
-// 3. A/B TESTING (DETAILED)
+// 3. A/B TESTING
 // ----------------------------------------------------------------------
 function ABTestingTool() {
   const [sampleA, setSampleA] = useState(1000);
@@ -461,9 +449,7 @@ function ABTestingTool() {
          <h2 className="text-3xl font-black tracking-tighter mb-2">Prueba de Hipótesis (A/B)</h2>
          <p className="text-slate-500 font-medium text-sm">Valida si una diferencia es estadísticamente significativa.</p>
        </div>
-       
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 mb-8">
-         {/* Grupo A */}
          <div className="bg-slate-50 rounded-[2rem] p-8 transition-all duration-300 hover:shadow-lg border border-transparent hover:border-slate-100">
              <div className="flex justify-between items-center mb-8">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Grupo Control (A)</span>
@@ -484,11 +470,8 @@ function ABTestingTool() {
                </div>
              </div>
          </div>
-
-         {/* Grupo B */}
          <div className="bg-indigo-50/50 rounded-[2rem] p-8 transition-all duration-300 hover:shadow-lg border border-indigo-50 hover:border-indigo-100 relative overflow-hidden">
              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-200/40 rounded-full blur-3xl -mr-10 -mt-10"></div>
-             
              <div className="flex justify-between items-center mb-8 relative z-10">
                 <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest">Variante (B)</span>
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm text-indigo-600 font-bold">B</div>
@@ -509,7 +492,6 @@ function ABTestingTool() {
              </div>
          </div>
        </div>
-
        {results && (
          <div className={`rounded-[2rem] p-8 flex flex-col md:flex-row items-start md:items-center gap-6 transition-all duration-500 ${results.isSignificant ? 'bg-slate-900 text-white shadow-2xl shadow-slate-900/20' : 'bg-slate-100 text-slate-500'}`}>
             <div className={`p-4 rounded-full ${results.isSignificant ? 'bg-white/10 text-white animate-pulse' : 'bg-slate-200 text-slate-400'}`}>
@@ -530,7 +512,6 @@ function ABTestingTool() {
             </div>
          </div>
        )}
-
        <ExplanationSection 
           title="Prueba Z para Dos Proporciones"
           purpose="Validar si la diferencia observada entre dos grupos es 'real' (estadísticamente significativa) o si es producto del azar."
@@ -543,7 +524,7 @@ function ABTestingTool() {
 }
 
 // ----------------------------------------------------------------------
-// 4. ESTRATIFICADO (DETAILED)
+// 4. ESTRATIFICADO
 // ----------------------------------------------------------------------
 function StratifiedTool() {
   const [totalSample, setTotalSample] = useState(400);
@@ -575,7 +556,6 @@ function StratifiedTool() {
              <h2 className="text-3xl font-black tracking-tighter mb-2">Estratificación</h2>
              <p className="text-slate-500 font-medium text-sm">Distribución proporcional de la muestra.</p>
            </div>
-           
            <div className="bg-slate-50 p-8 rounded-[2rem]">
              <div className="space-y-6">
                <Label helpText="El número total de encuestas que calculaste previamente con la herramienta de Muestra.">Muestra Objetivo (n)</Label>
@@ -587,7 +567,6 @@ function StratifiedTool() {
                />
              </div>
            </div>
-
            <div className="grid grid-cols-2 gap-4">
               <div className="p-5 bg-white border border-slate-100 rounded-3xl">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Población Total</p>
@@ -599,7 +578,6 @@ function StratifiedTool() {
               </div>
            </div>
         </div>
-
         <div className="w-full xl:w-8/12">
            <div className="flex justify-between items-center mb-8">
              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Matriz de Asignación Proporcional</h3>
@@ -607,17 +585,13 @@ function StratifiedTool() {
                <Plus size={14}/> Agregar Estrato
              </button>
            </div>
-           
            <div className="space-y-3">
-             {/* Header */}
              <div className="grid grid-cols-12 gap-4 px-6 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                <div className="col-span-5 md:col-span-4">Estrato / Grupo</div>
                <div className="col-span-3 md:col-span-3">Población (Ni)</div>
                <div className="col-span-3 md:col-span-4 text-right pr-4">Muestra (ni)</div>
                <div className="col-span-1"></div>
              </div>
-             
-             {/* Filas Cards */}
              {strata.map((s, idx) => {
                const weight = s.population / totalPop;
                const allocation = Math.round(weight * totalSample);
@@ -657,7 +631,6 @@ function StratifiedTool() {
                );
              })}
            </div>
-           
            <ExplanationSection 
               title="Afijación Proporcional"
               purpose="Evitar sesgos asegurando que cada subgrupo esté representado en la muestra exactamente en la misma proporción que en la realidad."
@@ -672,7 +645,7 @@ function StratifiedTool() {
 }
 
 // ----------------------------------------------------------------------
-// 5. COSTOS (DETAILED)
+// 5. COSTOS
 // ----------------------------------------------------------------------
 function CostEstimatorTool() {
   const [sampleSize, setSampleSize] = useState(384);
@@ -696,7 +669,6 @@ function CostEstimatorTool() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-         {/* Inputs */}
          <div className="lg:col-span-5 space-y-8">
              <div className="p-8 bg-slate-50 rounded-[2.5rem] space-y-6">
                <div>
@@ -708,7 +680,6 @@ function CostEstimatorTool() {
                  <Input type="number" value={cpi} onChange={e => setCpi(Number(e.target.value))} className="bg-white" />
                </div>
              </div>
-           
              <div className="px-4">
                 <div className="flex justify-between mb-4 items-center">
                   <Label helpText="Porcentaje de la población general que cumple con los requisitos para responder tu encuesta.">Incidencia (IR)</Label>
@@ -719,7 +690,6 @@ function CostEstimatorTool() {
                   Afecta directamente el número de intentos fallidos.
                 </p>
              </div>
-             
              <div className="px-4">
                 <Label>Duración Promedio (min)</Label>
                 <div className="mt-4 flex items-baseline gap-2">
@@ -728,25 +698,18 @@ function CostEstimatorTool() {
                 </div>
              </div>
          </div>
-
-         {/* Results Bento Grid */}
          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
-            {/* Total Budget */}
             <div className="md:col-span-2 bg-black text-white p-10 rounded-[2.5rem] shadow-2xl flex flex-col justify-between relative overflow-hidden group">
                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -mr-20 -mt-20 group-hover:bg-white/20 transition-colors duration-500"></div>
-               
                <div>
                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Presupuesto Estimado</p>
                  <p className="text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">${totalCost.toLocaleString()}</p>
                </div>
-               
                <div className="mt-8 pt-8 border-t border-white/10 flex items-center gap-3 text-sm font-bold text-slate-300">
                   <Clock size={18} className="text-white"/> 
                   <span>{totalHours.toLocaleString()} horas estimadas de campo</span>
                </div>
             </div>
-
-            {/* Contacts */}
             <div className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm flex flex-col justify-between">
                <div>
                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Esfuerzo de Barrido</p>
@@ -754,8 +717,6 @@ function CostEstimatorTool() {
                  <p className="text-xs text-slate-500 font-bold mt-1">Intentos Totales Necesarios</p>
                </div>
             </div>
-
-            {/* Efficiency */}
             <div className={`p-8 rounded-[2.5rem] flex flex-col justify-between border ${incidence < 50 ? 'bg-rose-50/50 border-rose-100' : 'bg-emerald-50/50 border-emerald-100'}`}>
                <div>
                  <p className={`text-xs font-bold uppercase tracking-widest mb-3 text-slate-400`}>Eficiencia de Campo</p>
@@ -771,7 +732,6 @@ function CostEstimatorTool() {
             </div>
          </div>
       </div>
-      
       <ExplanationSection 
         title="Impacto de la Tasa de Incidencia (IR)"
         purpose="Calcular el 'Costo de Búsqueda'. No basta con pagar por las encuestas completas; hay un costo operativo en llamar/contactar a gente que al final no califica para el estudio."
@@ -789,7 +749,7 @@ function CostEstimatorTool() {
 }
 
 // ----------------------------------------------------------------------
-// 6. GUÍA DE MUESTREO (NEW)
+// 6. GUÍA DE MUESTREO
 // ----------------------------------------------------------------------
 function SamplingGuideTool() {
   return (
@@ -798,9 +758,7 @@ function SamplingGuideTool() {
          <h2 className="text-3xl font-black tracking-tighter mb-2">Selector de Método</h2>
          <p className="text-slate-500 font-medium text-sm">¿Qué tipo de muestreo necesita tu estudio?</p>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Probabilístico */}
         <div className="bg-slate-900 text-white rounded-[2rem] p-8 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/30 rounded-full blur-[80px] -mr-20 -mt-20"></div>
             <div className="relative z-10">
@@ -813,11 +771,9 @@ function SamplingGuideTool() {
                         <p className="text-xs text-slate-400 uppercase tracking-widest">El Estándar Científico</p>
                     </div>
                 </div>
-                
                 <p className="text-slate-300 text-sm mb-8 leading-relaxed">
                     Todos los individuos tienen una probabilidad conocida (no cero) de ser seleccionados. Permite calcular el margen de error y generalizar resultados (inferencia estadística).
                 </p>
-
                 <div className="space-y-4">
                     <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
                         <h4 className="font-bold text-emerald-300 text-sm mb-1">Aleatorio Simple</h4>
@@ -832,7 +788,6 @@ function SamplingGuideTool() {
                         <p className="text-xs text-slate-400">Selecciona grupos naturales (ej: escuelas, manzanas) al azar.</p>
                     </div>
                 </div>
-                
                 <div className="mt-8 pt-6 border-t border-white/10">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Requisitos:</p>
                     <ul className="text-xs text-slate-300 space-y-2 list-disc pl-4">
@@ -842,8 +797,6 @@ function SamplingGuideTool() {
                 </div>
             </div>
         </div>
-
-        {/* No Probabilístico */}
         <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-8 relative overflow-hidden group">
              <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-6">
@@ -855,11 +808,9 @@ function SamplingGuideTool() {
                         <p className="text-xs text-slate-500 uppercase tracking-widest">El Estándar Práctico</p>
                     </div>
                 </div>
-                
                 <p className="text-slate-600 text-sm mb-8 leading-relaxed">
                     La selección depende del criterio del investigador o la disponibilidad. No permite cálculo riguroso de error, pero es útil para exploración o cuando no hay lista completa.
                 </p>
-
                 <div className="space-y-4">
                     <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
                         <h4 className="font-bold text-indigo-600 text-sm mb-1">Por Cuotas</h4>
@@ -874,7 +825,6 @@ function SamplingGuideTool() {
                         <p className="text-xs text-slate-500">Lo que esté a mano (ej: encuestar en la calle). Alto sesgo.</p>
                     </div>
                 </div>
-                
                 <div className="mt-8 pt-6 border-t border-slate-200">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Uso Común:</p>
                     <ul className="text-xs text-slate-600 space-y-2 list-disc pl-4">
@@ -886,7 +836,6 @@ function SamplingGuideTool() {
             </div>
         </div>
       </div>
-      
        <ExplanationSection 
           title="¿Cuál debo elegir?"
           purpose="Definir la validez externa del estudio. La elección dicta si puedes decir 'La población piensa X' o solo 'Mis encuestados piensan X'."
@@ -899,7 +848,7 @@ function SamplingGuideTool() {
 }
 
 // ----------------------------------------------------------------------
-// 7. CASOS DE USO (NEW)
+// 7. CASOS DE USO
 // ----------------------------------------------------------------------
 function CaseStudiesTool() {
     const cases = [
@@ -953,7 +902,6 @@ function CaseStudiesTool() {
                 <h2 className="text-3xl font-black tracking-tighter mb-2">Casos Prácticos</h2>
                 <p className="text-slate-500 font-medium text-sm">Referencias rápidas para tomar decisiones.</p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {cases.map((c, i) => (
                     <div key={i} className={`bg-${c.color}-50/50 border border-${c.color}-100 rounded-3xl p-6 hover:shadow-lg transition-all duration-300 group`}>
@@ -965,10 +913,8 @@ function CaseStudiesTool() {
                                 {c.subtitle}
                             </span>
                         </div>
-                        
                         <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight">{c.title}</h3>
                         <p className="text-xs text-slate-500 mb-6 leading-relaxed">{c.context}</p>
-
                         <div className="space-y-3 bg-white p-4 rounded-2xl border border-slate-100 mb-4">
                             <div className="flex justify-between text-xs">
                                 <span className="text-slate-400 font-medium">Confianza:</span>
@@ -983,14 +929,12 @@ function CaseStudiesTool() {
                                 <span className={`font-black text-lg text-${c.color}-600`}>{c.params.result}</span>
                             </div>
                         </div>
-
                         <p className="text-[10px] text-slate-400 italic leading-relaxed border-l-2 pl-3 border-slate-200">
                             "{c.reason}"
                         </p>
                     </div>
                 ))}
             </div>
-            
             <ExplanationSection 
                 title="Contexto mata Fórmula"
                 purpose="Entender que el número mágico '384' (error 5%, confianza 95%) no es una ley universal. El diseño muestral debe adaptarse al riesgo que estás dispuesto a correr."
@@ -1006,14 +950,13 @@ function CaseStudiesTool() {
 // 8. ESTIMACIÓN DE DEMANDA (5-LAYER FUNNEL)
 // ----------------------------------------------------------------------
 function DemandEstimationTool() {
-  const [universe, setUniverse] = useState(100000); // Población Total
-  const [potentialPct, setPotentialPct] = useState(100); // Mercado Potencial (Interés/Necesidad)
-  const [availablePct, setAvailablePct] = useState(80); // Mercado Disponible (Acceso/Plata)
-  const [targetPct, setTargetPct] = useState(50); // Mercado Objetivo (A quién nos dirigimos)
-  const [penetratedPct, setPenetratedPct] = useState(10); // Mercado Penetrado (Cuota actual/esperada)
+  const [universe, setUniverse] = useState(100000); 
+  const [potentialPct, setPotentialPct] = useState(100); 
+  const [availablePct, setAvailablePct] = useState(80); 
+  const [targetPct, setTargetPct] = useState(50); 
+  const [penetratedPct, setPenetratedPct] = useState(10); 
   const [frequency, setFrequency] = useState(1);
 
-  // Calculations
   const potentialMarket = Math.floor(universe * (potentialPct / 100));
   const availableMarket = Math.floor(potentialMarket * (availablePct / 100));
   const targetMarket = Math.floor(availableMarket * (targetPct / 100));
@@ -1024,19 +967,16 @@ function DemandEstimationTool() {
   return (
     <Card className="p-8 lg:p-12">
       <div className="flex flex-col xl:flex-row gap-12">
-         {/* INPUTS - 5 LAYERS */}
          <div className="w-full xl:w-5/12 space-y-8">
             <div>
                <h2 className="text-3xl font-black tracking-tighter mb-2 text-slate-900">Demanda Potencial</h2>
                <p className="text-slate-500 font-medium text-sm">Modelo de 5 Capas (Market Sizing).</p>
             </div>
-
             <div className="space-y-6">
                <div>
                   <Label helpText="Población Total (N) de la zona geográfica o demográfica.">1. Población Total</Label>
                   <Input type="number" value={universe} onChange={e => setUniverse(Number(e.target.value))} />
                </div>
-
                <div className="p-6 bg-slate-50 rounded-3xl space-y-6 border border-slate-100">
                   <div>
                       <div className="flex justify-between mb-2">
@@ -1045,7 +985,6 @@ function DemandEstimationTool() {
                       </div>
                       <input type="range" min="1" max="100" value={potentialPct} onChange={e => setPotentialPct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-indigo-600 appearance-none cursor-pointer"/>
                   </div>
-                  
                   <div>
                       <div className="flex justify-between mb-2">
                           <Label helpText="% del Potencial que tiene acceso a tu canal y capacidad de pago (SAM).">3. % Mercado Disponible</Label>
@@ -1053,7 +992,6 @@ function DemandEstimationTool() {
                       </div>
                       <input type="range" min="1" max="100" value={availablePct} onChange={e => setAvailablePct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-indigo-600 appearance-none cursor-pointer"/>
                   </div>
-
                   <div>
                       <div className="flex justify-between mb-2">
                           <Label helpText="% del Disponible al que decides enfocarte por estrategia o presupuesto (Target).">4. % Mercado Objetivo</Label>
@@ -1061,7 +999,6 @@ function DemandEstimationTool() {
                       </div>
                       <input type="range" min="1" max="100" value={targetPct} onChange={e => setTargetPct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-indigo-600 appearance-none cursor-pointer"/>
                   </div>
-                  
                   <div>
                       <div className="flex justify-between mb-2">
                           <Label helpText="% del Objetivo que realmente logras capturar o convertir (SOM).">5. % Mercado Penetrado</Label>
@@ -1070,7 +1007,6 @@ function DemandEstimationTool() {
                       <input type="range" min="1" max="100" value={penetratedPct} onChange={e => setPenetratedPct(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-full accent-emerald-500 appearance-none cursor-pointer"/>
                   </div>
                </div>
-
                <div>
                   <Label helpText="Cuántas veces al año comprará el producto un usuario promedio.">Frecuencia de Consumo (Anual)</Label>
                   <div className="flex items-center gap-4">
@@ -1080,8 +1016,6 @@ function DemandEstimationTool() {
                </div>
             </div>
          </div>
-
-         {/* OUTPUTS - FUNNEL & BIG NUMBERS */}
          <div className="w-full xl:w-7/12">
             <div className="bg-slate-900 text-white rounded-[2.5rem] p-10 h-full relative overflow-hidden flex flex-col justify-between">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] -mr-40 -mt-40 pointer-events-none"></div>
@@ -1102,37 +1036,47 @@ function DemandEstimationTool() {
 
                    {/* FUNNEL VIZ */}
                    <div className="space-y-2 pt-8">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">Embudo de Mercado (Bottom-Up)</p>
+                      <div className="flex justify-between items-end mb-4">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Embudo de Mercado (Bottom-Up)</p>
+                          <div className="flex items-center gap-1 text-[9px] text-slate-500 bg-slate-800 px-2 py-1 rounded-lg border border-slate-700 cursor-help" title="Se aplica un ancho mínimo a las barras para que el texto sea legible, por lo que visualmente no representan la proporción exacta del 100%.">
+                             <AlertTriangle size={10} className="text-amber-500"/>
+                             <span>Escala Ajustada por Legibilidad</span>
+                          </div>
+                      </div>
                       
-                      {/* 1. Universe */}
-                      <div className="relative h-10 bg-slate-800 rounded-r-2xl w-full flex items-center px-4 border-l-4 border-slate-600 group">
+                      <div className="relative h-10 bg-slate-800 rounded-r-2xl w-full flex items-center px-4 border-l-4 border-slate-600 group min-w-[220px]">
                          <span className="text-[10px] font-bold text-slate-400 w-32 uppercase">1. Población Total</span>
                          <span className="text-xs font-bold ml-auto">{universe.toLocaleString()}</span>
                       </div>
                       
-                      {/* 2. Potential */}
-                      <div className="relative h-10 bg-indigo-900/30 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-300/30 transition-all duration-500" style={{width: `${Math.max(10, (potentialMarket/universe)*100)}%`}}>
+                      <div className="relative h-10 bg-indigo-900/30 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-300/30 transition-all duration-500 min-w-[220px]" style={{width: `${Math.max(10, (potentialMarket/universe)*100)}%`}}>
                          <span className="text-[10px] font-bold text-indigo-200 w-32 uppercase">2. Potencial</span>
                          <span className="text-xs font-bold ml-auto text-indigo-100">{potentialMarket.toLocaleString()}</span>
                       </div>
 
-                      {/* 3. Available */}
-                      <div className="relative h-10 bg-indigo-900/60 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-400/50 transition-all duration-500" style={{width: `${Math.max(10, (availableMarket/universe)*100)}%`}}>
+                      <div className="relative h-10 bg-indigo-900/60 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-400/50 transition-all duration-500 min-w-[220px]" style={{width: `${Math.max(10, (availableMarket/universe)*100)}%`}}>
                          <span className="text-[10px] font-bold text-indigo-100 w-32 uppercase">3. Disponible</span>
                          <span className="text-xs font-bold ml-auto">{availableMarket.toLocaleString()}</span>
                       </div>
 
-                       {/* 4. Target */}
-                      <div className="relative h-10 bg-indigo-600 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-400 transition-all duration-500" style={{width: `${Math.max(10, (targetMarket/universe)*100)}%`}}>
+                      <div className="relative h-10 bg-indigo-600 rounded-r-2xl flex items-center px-4 border-l-4 border-indigo-400 transition-all duration-500 min-w-[220px]" style={{width: `${Math.max(10, (targetMarket/universe)*100)}%`}}>
                          <span className="text-[10px] font-bold text-white w-32 uppercase">4. Objetivo</span>
                          <span className="text-xs font-bold ml-auto">{targetMarket.toLocaleString()}</span>
                       </div>
 
-                      {/* 5. Penetrated */}
-                      <div className="relative h-10 bg-emerald-500 rounded-r-2xl flex items-center px-4 border-l-4 border-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-500" style={{width: `${Math.max(10, (penetratedMarket/universe)*100)}%`}}>
+                      <div className="relative h-10 bg-emerald-500 rounded-r-2xl flex items-center px-4 border-l-4 border-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-500 min-w-[220px]" style={{width: `${Math.max(10, (penetratedMarket/universe)*100)}%`}}>
                          <span className="text-[10px] font-bold text-black w-32 uppercase">5. Penetrado</span>
                          <span className="text-xs font-black text-black ml-auto">{penetratedMarket.toLocaleString()}</span>
                       </div>
+                   </div>
+
+                   <div className="text-[10px] text-slate-500 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50 flex gap-2">
+                       <AlertTriangle size={14} className="text-amber-500 flex-shrink-0 mt-0.5"/>
+                       <p>
+                           <strong>Nota de Transparencia:</strong> Para asegurar que los textos sean legibles, las barras inferiores tienen un "ancho mínimo" forzado. 
+                           Esto significa que el gráfico <em>no es matemáticamente proporcional</em> (ej: la barra del 1% se muestra más ancha de lo que es en realidad). 
+                           Guíese siempre por los números a la derecha.
+                       </p>
                    </div>
                 </div>
 
@@ -1142,7 +1086,6 @@ function DemandEstimationTool() {
             </div>
          </div>
       </div>
-
       <ExplanationSection 
           title="Las 5 Capas de Mercado"
           purpose="Afinar la puntería. Ir más allá de 'todos son mis clientes' para identificar quién realmente te sostiene financieramente."
